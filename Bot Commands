@@ -1,0 +1,74 @@
+import discord
+from discord.ext import commands
+import shelve
+
+db = shelve.open('tournament.dat')
+
+def print_shelve():
+    for team in db:
+        print('Team: '+ team)
+        for key in db[team]:
+            print('\n' + key + ':')
+            for item in db[team][key]:
+                print(item, end = ', ')
+        print()
+
+client = commands.Bot(command_prefix = '!')
+
+@client.event
+async def on_ready():
+    print('Bot is ready')
+    channel = client.get_channel(873356724722081832)
+    await channel.send("Bot is online")
+    
+@client.command()
+async def addteam(ctx, teamname, members):
+    db = shelve.open('tournament.dat')
+    
+    members = members.split(',')
+
+    db[teamname] = {
+        'members': members,
+        'wins': [0],
+        'record': [0]
+    }
+    await ctx.send("Added!")
+
+@client.command()
+async def removeteam(ctx, teamname):
+    db = shelve.open('tournament.dat')
+    
+    del db[teamname]
+
+    await ctx.send("Removed!")
+
+@client.command()
+async def addmember(ctx, teamname, member):
+    db = shelve.open('tournament.dat')
+    
+    db_copy = db[teamname]
+    db_copy_members = db_copy['members']
+    db_copy_members.append(member)
+    db_copy['members'] = db_copy_members
+    db[teamname] = db_copy
+
+    await ctx.send("Added!")
+
+@client.command()
+async def removemember(ctx, teamname, member):
+    db = shelve.open('tournament.dat')
+    
+    db_copy = db[teamname]
+    db_copy_members = db_copy['members']
+    db_copy_members.remove(member)
+    db_copy['members'] = db_copy_members
+    db[teamname] = db_copy
+
+    await ctx.send("Removed!")
+
+@client.command()
+async def data(ctx):
+    print_shelve()
+    await ctx.send("Sent!")
+
+client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.Xa5qMPBNbDj-tLweUDysClTFv5E')
