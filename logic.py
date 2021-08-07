@@ -1,7 +1,7 @@
 import random
-round = 1
 
-def creat_Chart(DATA, Round):
+def create_Chart(DATA, Round):
+    round = Round
     data = DATA
     pairlist = []
     tournament = (sorted(data))
@@ -16,15 +16,18 @@ def creat_Chart(DATA, Round):
             pair.append(tournament[i*2])
             pair.append(tournament[(i*2)+1])
             pairlist.append(pair)
-        print(pairlist) 
-        
+        #print(pairlist) 
+    
+    # [-2, -2, -2, -2, -2, 2, 3, 4]
+    # randomize -2, -2, -2, -2,
+    # [-2, 2] [3, 4]
     if round != 1:
         for i in range(int(len(tournament)/2)):
             pair = []
             pair.append(tournament[i*2])
             pair.append(tournament[(i*2)+1])
             pairlist.append(pair)
-        print(pairlist)
+        #print(pairlist)
     
     return pairlist
     #Pairs = open("Pairs", "w")
