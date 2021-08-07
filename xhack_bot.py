@@ -48,7 +48,7 @@ async def nextround(ctx):
     if counter > 0:
         await ctx.send(f'there are {counter} teams not done round.')
     else:
-        
+        embed = discord.Embed(title="Matches", description=" ", color=0x87ff7b, inline = False)
         data = []
         for teams in db:
             here_data = []
@@ -61,7 +61,7 @@ async def nextround(ctx):
         schedule = logic.create_Chart(data, (mininum+1))
         print(schedule)
         if len(round_num) % 2 == 1:
-            await ctx.send("Pass: " + str(schedule[0][1]))
+            embed.add_field(name = 'Pass:', value = str(schedule[0][1]), inline = False)
             text = (schedule[0][1])
             byeteam = db[text]
             record = byeteam['record']
@@ -70,7 +70,6 @@ async def nextround(ctx):
             db[text] = byeteam
             schedule.pop(0)
         print(schedule)
-        embed = discord.Embed(title="Matches", description=" ", color=0x87ff7b, inline = False)
         for i in range(len(schedule)):
             embed.add_field(name = f'Match {i+1}:', value = str(schedule[i][0][1]) + " vs " + str(schedule[i][1][1]), inline = False)
         await ctx.send(embed = embed)
@@ -175,4 +174,4 @@ async def data(ctx):
             embed.add_field(name = key, value = db[teams][key], inline = True)
     await ctx.send(embed=embed)
 
-client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.o33lQlVMQcK3Fd_5cMAB-iCGrVQ')
+client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.pDKQQ58BG5je0GEBHmZ6ApbonW8')
