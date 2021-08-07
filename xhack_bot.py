@@ -185,12 +185,12 @@ async def help(ctx):
 
 @client.command()
 async def data(ctx):
-    embed = discord.Embed(title="Team List", description="The teams comprise of:", color=0x87ff7b, inline = False)
+    embed = discord.Embed(title="Team List", description="The teams comprise of:", color=0x87ff7b, inline = True)
     db = shelve.open('tournament.dat')
     for teams in db:
         embed.add_field(name = 'Team:', value = teams, inline = False)
         for key in db[teams]:
-            embed.add_field(name = key, value = db[teams][key], inline = False)
+            embed.add_field(name = key, value = db[teams][key], inline = True)
     await ctx.send(embed=embed)
 
 client.run
