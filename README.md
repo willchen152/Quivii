@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/PotatoDistribution/TourneyBot/main/assets/quivii.png">
+  <img src="https://raw.githubusercontent.com/PotatoDistribution/Quivii/main/assets/quivii.png">
 </p>
 
 # Quivii
@@ -19,7 +19,7 @@ Alternatively, you can download the source code **\[NOT YET AVAILBLE\]** to tink
 After inviting the bot, type `!create` to create a tournament; the bot will walk you through the steps necessary to set it up properly.
 
 ## Documentation
-Refer to [our wiki](https://github.com/PotatoDistribution/TourneyBot/wiki) for a full list of commands!
+Refer to [our wiki](https://github.com/PotatoDistribution/Quivii/wiki) for a full list of commands!
 
 ## About Us
 | Username | Role | Links |
