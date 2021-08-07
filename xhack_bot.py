@@ -20,50 +20,6 @@ async def test(ctx):
     db = shelve.open('tournament.dat')
     db['person'] = name
     print(db['person'])
-
-
-@client.command()
-async def create(ctx):
-    m = await inputd("What is the tournament name?", ctx)
-
-    if m.content != None:
-        await ctx.send("good")
-        tourn_name = str(m.content)
-        db = shelve.open('tournament.dat')
-        db['tourn_name'] = tourn_name
-        print(db['tourn_name'])  
-        
-        m = await inputd("How many teams?", ctx)
-    
-        if m.content != None:
-            await ctx.send("good")
-            num_teams = int(m.content)     
-            teamchart = []
-            
-            for team in range(num_teams):
-                m = await inputd("What is team" + str(team + 1) + "'s name", ctx)
-                if m.content != None:
-                    await ctx.send(":)")
-                    team_stats = []
-                    team_stats.append(0)
-                    team_stats.append(m.content)
-                    teamchart.append(team_stats)
-                    
-                    m = await inputd("How many members are in the team?", ctx)
-                    num_member = int(m.content)
-                    
-                    for mem in range(num_member):
-                        m = await inputd("What is member" + str(mem + 1) + "'s name", ctx)
-                        if m.content != None:
-                            await ctx.send("Nice")
-                            team_mem = m.content
-                    continue
-            db["teamchart"] = teamchart
-            logic.creat_Chart(teamchart, 1)
-            await ctx.send(str(teamchart))
-        
-    else:
-        await ctx.send("bad")    
       
 @client.command()
 async def addteam(ctx, teamname, members):
