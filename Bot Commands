@@ -69,6 +69,13 @@ async def removemember(ctx, teamname, member):
 @client.command()
 async def data(ctx):
     print_shelve()
+    for team in db:
+        await ctx.send('Team: '+ team)
+        for key in db[team]:
+            await ctx.send('\n' + key + ':')
+            for item in db[team][key]:
+                await ctx.send(item + ', ')
+        await ctx.send()
     await ctx.send("Sent!")
 
-client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.Xa5qMPBNbDj-tLweUDysClTFv5E')
+client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.-ggpOU5o6YOyOtlnFyBAAHikXJw')
