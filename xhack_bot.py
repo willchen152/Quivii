@@ -65,6 +65,28 @@ async def create(ctx):
     else:
         await ctx.send("bad")    
       
+@client.command()
+async def addteam(ctx, teamname, members):
+    db = shelve.open('tournament.dat')
+    
+    members = members.split(',')
+
+    db[teamname] = {
+        'members': members,
+        'wins': [0],
+        'record': [0]
+    }
+    await ctx.send("Added!")
+    db = shelve.close()
+
+@client.command()
+async def removeteam(ctx, teamname):
+    db = shelve.open('tournament.dat')
+    
+    del db[teamname]
+
+    await ctx.send("Removed!")
+    db = shelve.close()
 
 #await channel.send(file=discord.File('my_image.png'))
 
