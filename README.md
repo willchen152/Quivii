@@ -13,4 +13,6 @@ Features:
 
 [Invite the bot to your server](https://discord.com/api/oauth2/authorize?client_id=873357302399393822&permissions=8&scope=bot)
 
-After inviting the bot, type !create to create a tournament 
+After inviting the bot, type !create to create a tournament, the bot will walk you through the steps to set up your tournament. 
+
+Refer to the wiki for a full list of commands. 
