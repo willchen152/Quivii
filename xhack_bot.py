@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 import shelve
 import logic
-import pprint
+
 
 client = commands.Bot(command_prefix = '!', help_command=None)
 
@@ -12,8 +12,7 @@ async def on_ready():
     print('Bot is ready')
     channel = client.get_channel(873356724722081832)
     await channel.send("Bot is online")
-    db = shelve.open('tournament.dat')
-    db['teams'] = []   
+    db = shelve.open('tournament.dat') 
 
  
 @client.command()
@@ -35,13 +34,9 @@ async def addteam(ctx, teamname, members):
     db[teamname] = {
         'members': members,
         'wins': [0],
-        'record': []
+        'record': []    
     }
     
-        
-    teams = db["teams"] #array of teamnames
-    teams.append(teamname)
-    db['teams'] = teams    
     
     await ctx.send("Added!")
 
@@ -52,12 +47,18 @@ async def addteam(ctx, teamname, members):
 @client.command()
 async def nextround(ctx):
     db = shelve.open('tournament.dat')
-    teams = db['teams']     
     round_num = []
-    for team in teams:
-        round_num.append(len(db[team]['record']))
+    for teams in db:
+        
+        # get slice object to slice Python
+        text = 'record'      
+        print(db[teams])
+        #print("record: ", len(db[teams]['record']))
+        x = (len(db[teams][text]))
+        round_num.append(x)
     counter = 0
     mininum = min(round_num)
+    print("round num: ", round_num)
     for item in round_num:
         if item != mininum:
             counter += 1
@@ -66,17 +67,28 @@ async def nextround(ctx):
     else:
         
         data = []
-        for team in range(len(teams)):
-            team_name = teams[team]
+        for teams in db:
             here_data = []
-            here_data.append(db[team_name]['wins'][0]) 
-            here_data.append(team_name)
+            here_data.append(db[teams]['wins'][0]) 
+            here_data.append(teams)
             data.append(here_data)
         print(mininum + 1)
         print(data)
         print(sorted(data))
         schedule = logic.create_Chart(data, (mininum+1))
         print(schedule)
+        if len(round_num) % 2 == 1:
+            await ctx.send("Pass: " + str(schedule[0][1]))
+            text = (schedule[0][1])
+            byeteam = db[text]
+            record = byeteam['record']
+            record.append(0)
+            byeteam['record'] = record
+            db[text] = byeteam
+            schedule.pop(0)
+        print(schedule)
+        for i in range(len(schedule)):
+            await ctx.send(str(schedule[i][0][1]) + " vs " + str(schedule[i][1][1]))
         await ctx.send("Done")
         db.close()    
   
@@ -131,7 +143,6 @@ async def update(ctx, team1, result1, team2, result2):
     print(db[teams[2]])
 
     await ctx.send('Updated')
-
 @client.command()
 async def addmember(ctx, teamname, member):
     db = shelve.open('tournament.dat')
@@ -179,8 +190,7 @@ async def help(ctx):
     embed.add_field(name = '!nextround', value = 'creates a schedule for the nextround based on teams', inline = False)
     embed.add_field(name = '!update', value = 'updates a match where the 4 parameters seperated by a space are -> team1 name, 1/0, team2 name, 1/0', inline = False)
     embed.add_field(name = '!ping', value = 'checks the ping of the bot', inline = False)
-    embed.add_field(name = '!data', value = 'Shows the members and the win-loss of each team.', inline = False)
-    
+
     await ctx.send(embed = embed)
 
 @client.command()
@@ -192,5 +202,4 @@ async def data(ctx):
         for key in db[teams]:
             embed.add_field(name = key, value = db[teams][key], inline = True)
     await ctx.send(embed=embed)
-
-client.run
+  
