@@ -13,4 +13,4 @@ Features:
 
 [Invite the bot to your server](placeholder link)
 
-After inviting the bot, 
+After inviting the bot, type !create to create a tournament 
