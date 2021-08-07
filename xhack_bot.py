@@ -101,10 +101,8 @@ async def inputd(prompt, ctx):
     return message
 
 @client.command()
-async def update(ctx):
-    m = await inputd("Which teams would you like to update", ctx)
-    teams = m.content
-    teams = teams.split()
+async def update(ctx, team1, result1, team2, result2):
+    teams = [team1, result1, team2, result2]
     print(teams)
     db = shelve.open('tournament.dat')
     # teamname W/L teamname2 W/L
@@ -131,6 +129,8 @@ async def update(ctx):
     
     print(db[teams[0]])
     print(db[teams[2]])
+
+    await ctx.send('Updated')
 
 @client.command()
 async def addmember(ctx, teamname, member):
