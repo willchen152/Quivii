@@ -14,21 +14,6 @@ async def on_ready():
     await channel.send("Bot is online")
     db = shelve.open('tournament.dat')
     db['teams'] = []   
-@client.command()
-async def clear(ctx):
-    db = shelve.open('tournament.dat')
-    db.clear()
-
-@client.command()
-async def help(ctx):
-    await ctx.send('`help commands`')
-    await ctx.send('`!addteam - Adds a team where the first parameter is the team name and the second parameter are team members divided by a comma`')
-    await ctx.send('`!removeteam - Removes a team where the first parameter is the team name`')
-    await ctx.send('`!addmember - adds a member to the team name where the first parameter is the team name and the second parameter is the member name`')
-    await ctx.send('`!removemember - removes a member from the team name where the first parameter is the team name and the second parameter is the member name`')
-    await ctx.send('`!clear - clears the shelve file, you may have to restart the program to access the new shelve file`')
-    await ctx.send('`!nextround - creates a schedule for the nextround based on teams`')
-    await ctx.send('`!update - updates a match where the 4 parameters seperated by a space are -> team1 name, 1/0, team2 name, 1/0`')
 
  
 @client.command()
@@ -174,13 +159,37 @@ async def removemember(ctx, teamname, member):
 
 
 @client.command()
-async def data(ctx):
-    db = shelve.open('tournament.dat')  
-    for teams in db:
-        print(db[teams])
-    
-        
-        
-    await ctx.send("Sent!")
+async def ping(ctx):
+    await ctx.send(f'{round(client.latency*1000)}ms')
 
-client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.A1Tty2BzBtYsKka8ZP31ChxG4eI')    
+@client.command()
+async def clear(ctx):
+    db = shelve.open('tournament.dat')
+    db.clear()
+    await ctx.send('Cleared!')
+
+@client.command()
+async def help(ctx):
+    embed=discord.Embed(title="Help Commands", color=0x87ff7b)
+    embed.add_field(name = '!addteam', value = 'Adds a team where the first parameter is the team name and the second parameter are team members divided by a comma', inline = False)
+    embed.add_field(name = '!removeteam', value = 'Removes a team where the first parameter is the team name')
+    embed.add_field(name = '!addmember', value = ' adds a member to the team name where the first parameter is the team name and the second parameter is the member name', inline = False)
+    embed.add_field(name = '!removemember', value = 'removes a member from the team name where the first parameter is the team name and the second parameter is the member name', inline = False)
+    embed.add_field(name = '!clear', value = ' clears the shelve file, you may have to restart the program to access the new shelve file', inline = False)
+    embed.add_field(name = '!nextround', value = 'creates a schedule for the nextround based on teams', inline = False)
+    embed.add_field(name = '!update', value = 'updates a match where the 4 parameters seperated by a space are -> team1 name, 1/0, team2 name, 1/0', inline = False)
+    embed.add_field(name = '!ping', value = 'checks the ping of the bot', inline = False)
+
+    await ctx.send(embed = embed)
+
+@client.command()
+async def data(ctx):
+    embed = discord.Embed(title="Team List", description="The teams comprise of:", color=0x87ff7b, inline = False)
+    db = shelve.open('tournament.dat')
+    for teams in db:
+        embed.add_field(name = 'Team:', value = teams, inline = False)
+        for key in db[teams]:
+            embed.add_field(name = key, value = db[teams][key], inline = False)
+    await ctx.send(embed=embed)
+
+client.run
