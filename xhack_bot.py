@@ -1,4 +1,3 @@
-
 import discord
 from discord.ext import commands
 import shelve
@@ -14,9 +13,6 @@ async def on_ready():
     await channel.send("Bot is online")
     db = shelve.open('tournament.dat') 
 
- 
-
-
 @client.command()
 async def addteam(ctx, teamname, members):
     db = shelve.open('tournament.dat')
@@ -29,12 +25,7 @@ async def addteam(ctx, teamname, members):
         'record': []    
     }
     
-    
     await ctx.send("Added!")
-
-    
-    
-    
 
 @client.command()
 async def nextround(ctx):
@@ -79,12 +70,12 @@ async def nextround(ctx):
             db[text] = byeteam
             schedule.pop(0)
         print(schedule)
+        embed = discord.Embed(title="Matches", description=" ", color=0x87ff7b, inline = False)
         for i in range(len(schedule)):
-            await ctx.send(str(schedule[i][0][1]) + " vs " + str(schedule[i][1][1]))
-        await ctx.send("Done")
-        db.close()    
+            embed.add_field(name = f'Match {i+1}:', value = str(schedule[i][0][1]) + " vs " + str(schedule[i][1][1]), inline = False)
+        await ctx.send(embed = embed)
+        db.close()   
   
-    
 @client.command()
 async def removeteam(ctx, teamname):
     db = shelve.open('tournament.dat')
@@ -93,7 +84,6 @@ async def removeteam(ctx, teamname):
 
     await ctx.send("Removed!")
     db = shelve.close()
-
 
 @client.command()
 async def update(ctx, team1, result1, team2, result2):
@@ -126,6 +116,7 @@ async def update(ctx, team1, result1, team2, result2):
     print(db[teams[2]])
 
     await ctx.send('Updated')
+
 @client.command()
 async def addmember(ctx, teamname, member):
     db = shelve.open('tournament.dat')
@@ -149,8 +140,6 @@ async def removemember(ctx, teamname, member):
     db[teamname] = db_copy
 
     await ctx.send("Removed!")
-
-
 
 @client.command()
 async def ping(ctx):
@@ -186,3 +175,4 @@ async def data(ctx):
             embed.add_field(name = key, value = db[teams][key], inline = True)
     await ctx.send(embed=embed)
 
+client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.o33lQlVMQcK3Fd_5cMAB-iCGrVQ')
