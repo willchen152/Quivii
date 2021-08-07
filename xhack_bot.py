@@ -179,7 +179,8 @@ async def help(ctx):
     embed.add_field(name = '!nextround', value = 'creates a schedule for the nextround based on teams', inline = False)
     embed.add_field(name = '!update', value = 'updates a match where the 4 parameters seperated by a space are -> team1 name, 1/0, team2 name, 1/0', inline = False)
     embed.add_field(name = '!ping', value = 'checks the ping of the bot', inline = False)
-
+    embed.add_field(name = '!data', value = 'Shows the members and the win-loss of each team.', inline = False)
+    
     await ctx.send(embed = embed)
 
 @client.command()
