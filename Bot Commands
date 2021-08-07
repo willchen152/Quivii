@@ -70,5 +70,9 @@ async def removemember(ctx, teamname, member):
 async def data(ctx):
     print_shelve()
     await ctx.send("Sent!")
-
-client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.-ggpOU5o6YOyOtlnFyBAAHikXJw')
+    
+@client.command()
+async def ping(ctx):
+    await ctx.send(f'{round(client.latency*1000)}ms')
+    
+client.run('')
