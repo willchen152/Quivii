@@ -5,6 +5,7 @@ def create_Chart(DATA, Round):
     data = DATA
     pairlist = []
     tournament = (sorted(data))
+    tournament.reverse()
     if len(tournament) % 2 == 1:
         pairlist.append(tournament[len(tournament) - 1])
         tournament.pop()
