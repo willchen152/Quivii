@@ -1,9 +1,11 @@
+
 import discord
 from discord.ext import commands
 import shelve
 import logic
+import pprint
 
-client = commands.Bot(command_prefix = '!')
+client = commands.Bot(command_prefix = '!', help_command=None)
 
 @client.event
 async def on_ready():
@@ -11,8 +13,24 @@ async def on_ready():
     channel = client.get_channel(873356724722081832)
     await channel.send("Bot is online")
     db = shelve.open('tournament.dat')
-    db['teams'] = []    
+    db['teams'] = []   
+@client.command()
+async def clear(ctx):
+    db = shelve.open('tournament.dat')
+    db.clear()
 
+@client.command()
+async def help(ctx):
+    await ctx.send('`help commands`')
+    await ctx.send('`!addteam - Adds a team where the first parameter is the team name and the second parameter are team members divided by a comma`')
+    await ctx.send('`!removeteam - Removes a team where the first parameter is the team name`')
+    await ctx.send('`!addmember - adds a member to the team name where the first parameter is the team name and the second parameter is the member name`')
+    await ctx.send('`!removemember - removes a member from the team name where the first parameter is the team name and the second parameter is the member name`')
+    await ctx.send('`!clear - clears the shelve file, you may have to restart the program to access the new shelve file`')
+    await ctx.send('`!nextround - creates a schedule for the nextround based on teams`')
+    await ctx.send('`!update - updates a match where the 4 parameters seperated by a space are -> team1 name, 1/0, team2 name, 1/0`')
+
+ 
 @client.command()
 async def test(ctx):
     m = await inputd("What is your name?", ctx)
@@ -128,3 +146,41 @@ async def update(ctx):
     
     print(db[teams[0]])
     print(db[teams[2]])
+
+@client.command()
+async def addmember(ctx, teamname, member):
+    db = shelve.open('tournament.dat')
+    
+    db_copy = db[teamname]
+    db_copy_members = db_copy['members']
+    db_copy_members.append(member)
+    db_copy['members'] = db_copy_members
+    db[teamname] = db_copy
+
+    await ctx.send("Added!")
+
+@client.command()
+async def removemember(ctx, teamname, member):
+    db = shelve.open('tournament.dat')
+    
+    db_copy = db[teamname]
+    db_copy_members = db_copy['members']
+    db_copy_members.remove(member)
+    db_copy['members'] = db_copy_members
+    db[teamname] = db_copy
+
+    await ctx.send("Removed!")
+
+
+
+@client.command()
+async def data(ctx):
+    db = shelve.open('tournament.dat')  
+    for teams in db:
+        print(db[teams])
+    
+        
+        
+    await ctx.send("Sent!")
+
+client.run('ODczMzU3MzAyMzk5MzkzODIy.YQ3PXw.A1Tty2BzBtYsKka8ZP31ChxG4eI')    
