@@ -15,14 +15,6 @@ async def on_ready():
     db = shelve.open('tournament.dat') 
 
  
-@client.command()
-async def test(ctx):
-    m = await inputd("What is your name?", ctx)
-    name = m.content
-    await ctx.send("Nice to meet you. The command for creating a tournament is -> " + '`!create`')
-    db = shelve.open('tournament.dat')
-    db['person'] = name
-    print(db['person'])
 
 
 @client.command()
@@ -102,15 +94,6 @@ async def removeteam(ctx, teamname):
     await ctx.send("Removed!")
     db = shelve.close()
 
-async def inputd(prompt, ctx):
-    await ctx.send(prompt) # Sending the initial message
-
-    def check(m):
-        return m.author == ctx.author
-
-    # Waiting for the message
-    message = await client.wait_for("message", check=check)
-    return message
 
 @client.command()
 async def update(ctx, team1, result1, team2, result2):
@@ -202,4 +185,4 @@ async def data(ctx):
         for key in db[teams]:
             embed.add_field(name = key, value = db[teams][key], inline = True)
     await ctx.send(embed=embed)
-  
+
