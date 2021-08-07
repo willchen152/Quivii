@@ -14,6 +14,7 @@ def print_shelve():
         print()
 
 client = commands.Bot(command_prefix = '!')
+client.remove_command('help')
 
 @client.event
 async def on_ready():
@@ -67,12 +68,37 @@ async def removemember(ctx, teamname, member):
     await ctx.send("Removed!")
 
 @client.command()
-async def data(ctx):
-    print_shelve()
-    await ctx.send("Sent!")
-    
-@client.command()
 async def ping(ctx):
     await ctx.send(f'{round(client.latency*1000)}ms')
-    
+
+@client.command()
+async def clear(ctx):
+    db = shelve.open('tournament.dat')
+    db.clear()
+    await ctx.send('Cleared!')
+
+@client.command()
+async def help(ctx):
+    embed=discord.Embed(title="Help Commands", color=0x87ff7b)
+    embed.add_field(name = '!addteam', value = 'Adds a team where the first parameter is the team name and the second parameter are team members divided by a comma', inline = False)
+    embed.add_field(name = '!removeteam', value = 'Removes a team where the first parameter is the team name')
+    embed.add_field(name = '!addmember', value = ' adds a member to the team name where the first parameter is the team name and the second parameter is the member name', inline = False)
+    embed.add_field(name = '!removemember', value = 'removes a member from the team name where the first parameter is the team name and the second parameter is the member name', inline = False)
+    embed.add_field(name = '!clear', value = ' clears the shelve file, you may have to restart the program to access the new shelve file', inline = False)
+    embed.add_field(name = '!nextround', value = 'creates a schedule for the nextround based on teams', inline = False)
+    embed.add_field(name = '!update', value = 'updates a match where the 4 parameters seperated by a space are -> team1 name, 1/0, team2 name, 1/0', inline = False)
+    embed.add_field(name = '!ping', value = 'checks the ping of the bot', inline = False)
+
+    await ctx.send(embed = embed)
+
+@client.command()
+async def data(ctx):
+    embed = discord.Embed(title="Team List", description="The teams comprise of:", color=0x87ff7b, inline = False)
+    db = shelve.open('tournament.dat')
+    for teams in db:
+        embed.add_field(name = 'Team:', value = teams, inline = False)
+        for key in db[teams]:
+            embed.add_field(name = key, value = db[teams][key], inline = False)
+    await ctx.send(embed=embed)
+
 client.run('')
