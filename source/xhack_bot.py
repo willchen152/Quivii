@@ -1,9 +1,13 @@
-
 import discord
 from discord.ext import commands
 import shelve
 import logic
+import os
+from keep_alive import keep_alive
 
+my_secret = os.environ['token']
+
+my_secret = os.environ['token']
 
 client = commands.Bot(command_prefix = '!', help_command=None)
 
@@ -12,10 +16,6 @@ async def on_ready():
     print('Bot is ready')
     channel = client.get_channel(873356724722081832)
     await channel.send("Bot is online")
-    db = shelve.open('tournament.dat') 
-
- 
-
 
 @client.command()
 async def addteam(ctx, teamname, members):
@@ -29,12 +29,7 @@ async def addteam(ctx, teamname, members):
         'record': []    
     }
     
-    
     await ctx.send("Added!")
-
-    
-    
-    
 
 @client.command()
 async def nextround(ctx):
@@ -88,7 +83,6 @@ async def nextround(ctx):
         await ctx.send(embed = embed)
         db.close()    
   
-    
 @client.command()
 async def removeteam(ctx, teamname):
     db = shelve.open('tournament.dat')
@@ -154,8 +148,6 @@ async def removemember(ctx, teamname, member):
 
     await ctx.send("Removed!")
 
-
-
 @client.command()
 async def ping(ctx):
     await ctx.send(f'{round(client.latency*1000)}ms')
@@ -190,4 +182,7 @@ async def data(ctx):
             embed.add_field(name = key, value = db[teams][key], inline = True)
     await ctx.send(embed=embed)
 
- 
+keep_alive()
+
+my_secret = os.environ['token']
+client.run(my_secret)
