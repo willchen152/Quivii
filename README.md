@@ -14,9 +14,9 @@ Features:
 
 ## Download
 You can [invite the official release of the bot](https://discord.com/api/oauth2/authorize?client_id=873357302399393822&permissions=8&scope=bot) for the base functionality.  
-Alternatively, you can download the source code **[here](https://github.com/PotatoDistribution/Quivii)** to tinker with it for yourself.
+Alternatively, you can download the source code **[here](https://github.com/PotatoDistribution/Quivii/releases/latest)** to tinker with it for yourself.
 
-After inviting the bot, type `!help` to see a list of the commands; the bot will walk you through the steps necessary to set it up properly.
+After inviting the bot, type `!help` to see a list of the commands.
 
 ## Documentation
 Refer to [our wiki](https://github.com/PotatoDistribution/Quivii/wiki) for a full list of commands!
