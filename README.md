@@ -8,8 +8,8 @@ An open-source, modular Discord bot that can organize tournaments for anything a
 
 Features:
 - Stores and updates tournament information on Discord
+- Commands for working around any last second changes
 - Automatically creates matches based on wins and losses
-- Provides participants with information such as the schedule and record/score of themselves and their opponents
 - Configurable for your own preferences via the source code
 
 ## Download
