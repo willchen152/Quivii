@@ -22,9 +22,9 @@ After inviting the bot, type `!help` to see a list of the commands; the bot will
 Refer to [our wiki](https://github.com/PotatoDistribution/Quivii/wiki) for a full list of commands!
 
 ## About Us
-| Username | Role | Links |
-| --- | --- | --- |
-| Chenguku | Front-end | [GitHub](https://github.com/Chenguku) |
-| PotatoDistribution | Back-end | [GitHub](https://github.com/PotatoDistribution) |
-| Rifltz | Front-end, Graphics | [GitHub](https://github.com/Rifltz) |
-| Zli123123 | Back-end | [GitHub](https://github.com/Zli123123) |
+| Username | Name | Role | Links |
+| --- | --- | --- | --- |
+| Chenguku | Jason Li | Front-end | [GitHub](https://github.com/Chenguku) |
+| PotatoDistribution | William Chen | Back-end | [GitHub](https://github.com/PotatoDistribution) |
+| Rifltz | Feng-Xiang Ming | Front-end, Graphics | [GitHub](https://github.com/Rifltz) |
+| Zli123123 | Zhenhao Li | Back-end | [GitHub](https://github.com/Zli123123) |
